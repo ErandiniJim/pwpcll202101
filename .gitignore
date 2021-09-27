@@ -1,2 +1,3 @@
 # Ingnorando las dependencias
 node_modules
+dist-server
