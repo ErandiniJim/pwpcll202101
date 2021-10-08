@@ -1,4 +1,5 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
     // 1. Se estrablece modo desarrollo
     mode: 'development',
@@ -52,7 +53,16 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                test: /\.css$ /,
+                use: [MiniCssExtractPlugin.loader, 'css-loader']
             }
         ]
-    }
+    },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'styles/app.css'
+        })
+    ]
 }

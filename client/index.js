@@ -1,3 +1,5 @@
+import './stylesheets/style.css'
+
 console.log("Webpack Working!!!");
 // Default parameters Es6/2015
 let show = (m = "hola") => {
