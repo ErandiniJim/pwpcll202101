@@ -50,7 +50,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.css$ /,
+                test: /\.css$/,
                 use: [MiniCssExtractPlugin.loader, 'css-loader']
             }
         ]

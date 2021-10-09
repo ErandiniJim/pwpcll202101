@@ -1,4 +1,5 @@
 import './stylesheets/style.css'
+import './stylesheets/mystyles.css'
 
 console.log("Webpack Working!!!");
 // Default parameters Es6/2015
