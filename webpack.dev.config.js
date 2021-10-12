@@ -14,6 +14,7 @@ module.exports = {
         // 6. Servidor desarrollo, ruta path publico 
         publicPath: '/'
     },
+    
     module: {
         rules: [
             {
