@@ -1,46 +1,47 @@
-const path = require('path');
+const path=require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-module.exports = {
-    // 1. Se estrablece modo desarrollo
-    mode: 'development',
-    // 2. Especificar archivo entrada
-    entry: './client/index.js',
-    // 3. Salida de empaquetado
-    output: {
-        // 4. Ruta absoluta salida
-        path: path.join(__dirname, 'public'),
-        // 5. Nombre archivo salida
-        filename: 'js/bundle.js',
-        // 6. Servidor desarrollo, ruta path publico 
-        publicPath: '/'
+module.exports={
+    // 1.-Establecer el modo
+    mode:'development',
+    // 2.-Archivo de entrada
+    entry:'./client/index.js',
+    //3.-Especificando la saldia
+    output:{
+        //4.-Ruta absoluta de salida
+        path:path.join(__dirname,'public'),
+        //5.-Nombre del archivo de salida
+        filename:'js/bundle.js',
+        //6.-Ruta del path publico
+        publicPath:'/'
     },
-    module: {
-        rules: [
+    module:{
+        rules:[
             {
-                test: /\.js$ /,
-                exclude: /(node_modules|bower_components)/,
+                test: /\.js$/,
+                exclude:/(node_modules|bower_components)/,
                 use: [
                     {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: [
+                        loader:'babel-loader',
+                        options:{
+                            presets:[
                                 [
                                     '@babel/preset-env',
                                     {
                                         'modules': false,
-                                        'useBuiltIns': 'usage',
-                                        'targets': {"chrome": "80"},
-                                        'corejs': 3
+                                        'useBuiltIns':'usage',
+                                        'targets':{"chrome":"80"},
+                                        //'targets':"> 0.25%, not dead",
+                                        'corejs':3
                                     }
                                 ]
                             ],
-                            "plugins": [
+                            "plugins":[
                                 [
                                     "module-resolver",
                                     {
-                                        "root": ["./"],
+                                        "root":["./"],
                                         "alias":{
-                                            "@client" : "./client",
+                                            "@client":"./client"
                                         }
                                     }
                                 ]
@@ -50,14 +51,14 @@ module.exports = {
                 ]
             },
             {
-                test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader']
+                test:/\.css$/,
+                use:[MiniCssExtractPlugin.loader,'css-loader']
             }
         ]
     },
-    plugins: [
+    plugins:[
         new MiniCssExtractPlugin({
-            filename: 'styles/app.css'
+            filename:'styles/app.css'
         })
     ]
 }

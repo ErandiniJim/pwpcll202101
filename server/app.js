@@ -7,7 +7,7 @@ import path from 'path';
 
 import cookieParser from 'cookie-parser';
 
-import logger, { compile } from 'morgan';
+import logger from 'morgan';
 
 
 import indexRouter from '@s-routes/index';
