@@ -1,11 +1,11 @@
-/* eslint-disable no-console */
 /* eslint-disable no-alert */
+/* eslint-disable no-console */
 import './stylesheets/style.css';
 import './stylesheets/mystyles.css';
 
-console.log('Webpack Working!!!');
+console.log('wEbpack Working!!!');
 // Default parameters Es6/2015
-const show = (m = 'hola') => {
+const show = (m = 'Hot module represent working') => {
   alert(m);
 };
 
@@ -18,7 +18,6 @@ function resolveAfter2Seconds() {
     }, 2000);
   });
 }
-
 async function asyncCall() {
   console.log('Calling an async function');
   const result = await resolveAfter2Seconds();
