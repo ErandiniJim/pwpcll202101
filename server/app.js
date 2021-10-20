@@ -1,4 +1,6 @@
-
+/* eslint-disable spaced-comment */
+/* eslint-disable prettier/prettier */
+// eslint-disable-next-line prettier/prettier
 import createError from 'http-errors';
 
 import express from 'express';
@@ -13,6 +15,9 @@ import logger from 'morgan';
 import indexRouter from '@s-routes/index';
 
 import usersRouter from '@s-routes/users';
+
+//importing configurations
+import configTemplateEngine from '@s-config/template-engine'
 
 //importar modulos de webpack
 import webpack from 'webpack';
@@ -49,8 +54,7 @@ if(env === 'development'){
 }
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+configTemplateEngine(app);
 
 app.use(logger('dev'));
 app.use(express.json());
