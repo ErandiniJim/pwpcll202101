@@ -10,7 +10,7 @@ export default (app) => {
     ExpHbs({
       extname: '.hbs',
       defaultLayout: 'main',
-    })
+    }),
   );
 
   // 2. Seleccionar Motor de plantillas registrado

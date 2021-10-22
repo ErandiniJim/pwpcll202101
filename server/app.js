@@ -1,5 +1,7 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable spaced-comment */
 /* eslint-disable prettier/prettier */
+/* eslint-disable no-console*/
 // eslint-disable-next-line prettier/prettier
 import createError from 'http-errors';
 
@@ -9,7 +11,8 @@ import path from 'path';
 
 import cookieParser from 'cookie-parser';
 
-import logger from 'morgan';
+import morgan from 'morgan';
+import winston from '@server/config/winston';
 
 
 import indexRouter from '@s-routes/index';
@@ -23,14 +26,13 @@ import configTemplateEngine from '@s-config/template-engine'
 import webpack from 'webpack';
 import WebpackDevMiddleware from 'webpack-dev-middleware';
 import WebpackHotMiddleware from 'webpack-hot-middleware';
-import WebpackConfig from '../webpack.dev.config';
 import webpackDevConfig from '../webpack.dev.config';
 
 //consultar modo en que se ejecuta la aplicacion
 const env = process.env.NODE_ENV || 'developement';
 
 //creacion aplicacion express
-var app = express();
+const app = express();
 
 //verficiar modo ejecucion de la aplicacion
 if(env === 'development'){
@@ -38,11 +40,11 @@ if(env === 'development'){
   //ruta del Hot module replasmen
   //reload=true: habilita recarga fronted al tener cambios en codigo fuente del fronted
   //timeout=1000: Tiempo espera recarga
-  WebpackConfig.entry = ['Webpack-hot-middleware/client?reload=true&timeout=1000', WebpackConfig.entry];
+  webpackDevConfig.entry = ['Webpack-hot-middleware/client?reload=true&timeout=1000', webpackDevConfig.entry];
   //Agregar plugin
-  WebpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
+  webpackDevConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
   //compilador
-  const compiler = webpack(WebpackConfig);
+  const compiler = webpack(webpackDevConfig);
   //Agregando middleware a cadena
   app.use(WebpackDevMiddleware(compiler,{
   publicPath: webpackDevConfig.output.publicPath
@@ -56,7 +58,7 @@ if(env === 'development'){
 // view engine setup
 configTemplateEngine(app);
 
-app.use(logger('dev'));
+app.use(morgan('dev', { stream : winston.stream }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -66,15 +68,20 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
+  // Log
+  winston.error(`Code: 404 Message: Page Not Found, URL: ${req.originalUrl}, Method: ${req.method}`);
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // Loggeando con winston
+  winston.error(`status: ${err.status || 500}, Message: ${err.message}, Method: ${req.method}, IP: ${req.ip}`);
 
   // render the error page
   res.status(err.status || 500);
