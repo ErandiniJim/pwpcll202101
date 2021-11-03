@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 import winston from '@server/config/winston';
+// Importando config de aplicacion
+import configkeys from '@server/config/configkeys';
 
 /**
  * Module dependencies.
@@ -34,7 +36,7 @@ function normalizePort(val) {
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(configkeys.port || '3000');
 app.set('port', port);
 
 const bind = typeof port === 'string' ? `Pipe ${port}` : `Port ${port}`;
