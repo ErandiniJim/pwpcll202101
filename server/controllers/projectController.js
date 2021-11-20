@@ -6,7 +6,7 @@ const index = (req, res) => {
 
 // "/projects/add"
 const add = (req, res) => {
-  res.send('Respondiendo a "/projects/add"');
+  res.render('project/addView');
 };
 
 // Pendiente por programar
